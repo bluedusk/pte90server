@@ -1,0 +1,20 @@
+{
+  "name": "pte90-server",
+  "version": "1.0.0",
+  "description": "pte90-server",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "koa": "^2.0.1",
+    "koa-logger": "^2.0.1",
+    "koa-router": "^5.4.0",
+    "mongoose": "^4.8.5",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "danielz",
+  "license": "ISC"
+}
