@@ -2,25 +2,17 @@
 
 // var xss = require('xss')
 var mongoose = require('mongoose')
-mongoose.Promise = require('bluebird')
 var User = mongoose.model('User')
 var uuid = require('uuid')
 
 exports.new = function *(next){
-
-
-  console.log(this.request);
-  console.log(this.request.query);
-  console.log(this.request.body);
-
   var user = new User({
     name: 'helloworld',
-    accessToken: uuid.v4(),
-    points: 234
+    accessToken: uuid.v4()
   });
 
   try {
-    //console.log(user.toString());
+    console.log(user.toString());
     user = yield user.save();
     this.body = user
   } catch (e) {
@@ -50,8 +42,6 @@ exports.list = function *(next){
 }
 
 exports.show = function *(next){
-
-    console.log(this.params);
     let users = yield User.find({_id:"58b523c3ef8312ab91fef301"})
     this.body = users
     return next

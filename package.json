@@ -2,18 +2,23 @@
   "name": "pte90-server",
   "version": "1.0.0",
   "description": "pte90-server",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "bluebird": "^3.4.7",
     "koa": "^2.0.1",
+    "koa-bodyparser": "^4.1.0",
+    "koa-convert": "^1.2.0",
     "koa-logger": "^2.0.1",
     "koa-router": "^5.4.0",
     "mongoose": "^4.8.5",
     "uuid": "^3.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/nodemon app.js"
   },
   "author": "danielz",
   "license": "ISC"
