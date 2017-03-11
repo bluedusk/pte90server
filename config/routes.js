@@ -26,15 +26,28 @@ module.exports = function() {
  */
 
   // user
-  router.post('/u/new', UserController.new)
+  router.post('/users', UserController.new)
+  router.get('/users', UserController.list)
+  router.get('/users/:id', UserController.show)
+  // router.patch('/user/:id', UserController.update)
 
-  router.get('/u/users', UserController.list)
-  router.get('/u/user/:id', UserController.show)
-
-  router.get('/items', ItemController.list)
 
 
  // items
+ router.get('/items', ItemController.list)
+ router.get('/items/:type', ItemController.list)
+ router.post('/items', ItemController.new)
+ router.delete('/items/:id', ItemController.destroy)
+ // router.patch('/items/:id', ItemController.update)
+
+ // position
+ router.get('/positions', ItemController.list)
+ router.post('/positions', ItemController.new)
+
+ // experience
+ router.get('/experiences', ItemController.list)
+ router.post('/experiences', ItemController.new)
+
 
   return router
 }

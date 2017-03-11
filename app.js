@@ -3,6 +3,7 @@ const app = new Koa();
 const convert = require('koa-convert');
 var mongoose = require('mongoose');
 var User = require('./app/models/user');
+var TestItem = require('./app/models/testItem');
 
 // Database Connetion
 mongoose.Promise = require('bluebird')

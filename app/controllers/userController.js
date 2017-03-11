@@ -50,9 +50,10 @@ exports.list = function *(next){
 }
 
 exports.show = function *(next){
+  console.log(this.request.query);
 
     console.log(this.params);
-    let users = yield User.find({_id:"58b523c3ef8312ab91fef301"})
+    let users = yield User.find({_id:this.params.id})
     this.body = users
     return next
 }
