@@ -8,11 +8,12 @@ var ItemSchema = new mongoose.Schema({
   topic: String,
   tested: Number,
   answer: String,
-  essaySample: String,
+  essaySample: [],
   imageSrc: String,
   imageType: String,
   itemId: String,
-  contributor: String
+  contributor: String,
+  official: Boolean
 
 })
 

@@ -40,6 +40,12 @@ module.exports = function() {
  router.delete('/items/:id', ItemController.destroy)
  // router.patch('/items/:id', ItemController.update)
 
+ // useritems: user&items reference table
+
+ router.post('/tested', ItemController.testedNew)
+ router.patch('/tested', ItemController.testedDestroy)
+ // router.patch('/items/:id', ItemController.update)
+
  // position
  router.get('/positions', ItemController.list)
  router.post('/positions', ItemController.new)

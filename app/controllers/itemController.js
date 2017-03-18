@@ -1,13 +1,11 @@
 'use strict'
-'use strict'
-'use strict'
-'use strict'
-'use strict'
 
 // var xss = require('xss')
 var mongoose = require('mongoose')
 var TestItem = mongoose.model('TestItem')
+var UserTestedItem = mongoose.model('UserTestedItem')
 var uuid = require('uuid')
+var _ = require('lodash');
 
 exports.new = function *(next){
 
@@ -26,7 +24,7 @@ exports.new = function *(next){
   //   ImageType: 'pie',
   //   ItemId: uuid.v4()
   // });
-  var item = new TestItem();
+  let item = new TestItem();
   item.itemText = res.itemText;
   item.itemType = res.itemType;
   item.topic = res.topic;
@@ -37,6 +35,7 @@ exports.new = function *(next){
   item.imageType = res.imageType;
   item.contributor = res.contributor;
   item.itemId = uuid.v4();
+  item.official = res.official;
   try {
     //console.log(item.toString());
     item = yield item.save();
@@ -57,22 +56,58 @@ exports.list = function *(next){
 
   let type = this.params.type;
   let filter = !type ? {} : {itemType:type};
-  let userFilter = this.request.query.contributor;
-  if(userFilter){
-    filter.contributor = userFilter;
-    if(userFilter == 'user'){
-      // if data contains contributor and not equal to ''
-      filter.contributor = {$exists:true,$ne:""};
+  let {official,contributor,queryid} = this.request.query;
+
+  if (official) {
+    filter.official = official;
+  }
+  if(contributor){
+    // my items
+    if (contributor !== 'user') {
+      filter.contributor = contributor;
     }
+    // discover items
+    // if(userFilter == 'user'){
+    //   // if data contains contributor and not equal to ''
+    //   filter.contributor = {$exists:true,$ne:""};
+    // }
+  }
+  if(queryid){
+
   }
 
-  console.log(type);
+  console.log(filter);
   try {
+    // TODO Performance
+    // all items filter by type & user
     let items = yield TestItem.find(filter)
+    // all items current user have tested
+    let testedItems = yield UserTestedItem.find({userId:queryid})
+
+    console.log(testedItems);
+
+    let result = [];
+    items.forEach((item) =>{
+        // console.log(item);
+        // TODO must set value to ._doc when modify
+        item._doc.active = false;
+        //console.dir(item);
+
+        if(_.find(testedItems,{itemId:item.itemId})){
+          item._doc.active = true;
+        }
+
+        //result.push(item);
+      }
+    )
+
+    //console.log(result);
+
+
     this.body = {
       resCode: '0000',
       resMsg: 'success',
-      resBody:items
+      resBody: items
       }
     } catch (e) {
     this.body = {
@@ -104,6 +139,72 @@ exports.destroy = function *(next){
         resCode: '9999',
         resMsg: 'remove item failed.',
         resBody:item
+        }
+    }
+    return next
+}
+
+// tested ++
+exports.testedNew = function *(next){
+    let res = this.request.body;
+    console.log(res);
+    var testedItem = new UserTestedItem();
+    testedItem.userId = res.userId;
+    testedItem.itemId = res.itemId;
+
+    try {
+
+      // TODO move to router
+      // how to ensure transaction
+      let item = yield testedItem.save();
+      let res2 = yield TestItem.update(
+        {itemId:res.itemId},
+        { $inc: { tested: 1 } }
+      );
+      this.body = {
+        resCode: '0000',
+        resMsg: 'add testedItem success',
+        resBody:item
+        }
+    } catch (e) {
+      console.log(e);
+      this.body = {
+        resCode: '9999',
+        resMsg: 'add testedItem failed.',
+        resBody:e
+        }
+    }
+    return next
+}
+// tested --
+exports.testedDestroy = function *(next){
+    let res = this.request.body;
+    console.log(res);
+    // let testedItem = new UserTestedItem();
+    //
+    // testedItem.userId = res.userId;
+    // testedItem.itemId = res.itemId;
+
+    try {
+      let res1 = yield UserTestedItem.remove({userId:res.userId,itemId:res.itemId});
+      // console.log(res1);
+      let res2 = yield TestItem.update(
+        {itemId:res.itemId},
+        { $inc: { tested: -1 } }
+      );
+      console.log(res2);
+
+      this.body = {
+        resCode: '0000',
+        resMsg: 'add testedItem success',
+        resBody:[res1,res2]
+        }
+    } catch (e) {
+      console.log(e);
+      this.body = {
+        resCode: '9999',
+        resMsg: 'remove testedItem failed.',
+        resBody:e
         }
     }
     return next

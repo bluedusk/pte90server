@@ -4,11 +4,13 @@ const convert = require('koa-convert');
 var mongoose = require('mongoose');
 var User = require('./app/models/user');
 var TestItem = require('./app/models/testItem');
+var UserTestedItem = require('./app/models/testedItem');
 
 // Database Connetion
 mongoose.Promise = require('bluebird')
 mongoose.set('debug', true);
 
+// TODO createConnection ?
 var db = mongoose.connect('mongodb://127.0.0.1:27017/db');
 
 db.connection.on("error", function (error) {
