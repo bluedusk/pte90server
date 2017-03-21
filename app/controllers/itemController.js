@@ -2,6 +2,8 @@
 
 // var xss = require('xss')
 var mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
+
 var TestItem = mongoose.model('TestItem')
 var UserTestedItem = mongoose.model('UserTestedItem')
 var uuid = require('uuid')

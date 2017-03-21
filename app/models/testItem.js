@@ -12,7 +12,7 @@ var ItemSchema = new mongoose.Schema({
   imageSrc: String,
   imageType: String,
   itemId: String,
-  contributor: String,
+  contributor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   official: Boolean
 
 })

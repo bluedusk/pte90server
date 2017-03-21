@@ -2,6 +2,7 @@
 
 // var xss = require('xss')
 var mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 var User = mongoose.model('User')
 var uuid = require('uuid')
 
@@ -35,17 +36,4 @@ exports.show = function *(next){
     let users = yield User.find({_id:"58b523c3ef8312ab91fef301"})
     this.body = users
     return next
-}
-
-
-  componentWillMount() {
-
-       let result = fetch(url);
-       this.setState({result});
-   }
-
-
-   componentDidMount() {
-    alert('componentDidMount in NoticeBoard');
-    window.addEventListener('scroll', this._handleScroll);
 }

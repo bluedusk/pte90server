@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var User = require('./app/models/user');
 var TestItem = require('./app/models/testItem');
 var UserTestedItem = require('./app/models/testedItem');
+var Position = require('./app/models/position');
 
 // Database Connetion
 mongoose.Promise = require('bluebird')
