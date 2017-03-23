@@ -14,9 +14,9 @@ exports.new = function *(next){
   console.log(this.request.body);
 
   var user = new User({
-    name: 'helloworld',
+    name: 'user',
     accessToken: uuid.v4(),
-    points: 234
+    points: 500
   });
 
   try {

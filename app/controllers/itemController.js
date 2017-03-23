@@ -82,7 +82,7 @@ exports.list = function *(next){
   try {
     // TODO Performance
     // all items filter by type & user
-    let items = yield TestItem.find(filter)
+    let items = yield TestItem.find(filter).populate("contributor","name")
     // all items current user have tested
     let testedItems = yield UserTestedItem.find({userId:queryid})
 

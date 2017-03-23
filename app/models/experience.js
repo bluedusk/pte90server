@@ -2,12 +2,13 @@
 
 var mongoose = require('mongoose')
 
-var UserSchema = new mongoose.Schema({
-  name: String,
-  accessToken: String,
-  points: Number
+var ExpSchema = new mongoose.Schema({
+  text: String,
+  type: Number,
+  updatedAt: { type: Date, default: Date.now },
+  _creator : { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 
 })
 
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('Experience', ExpSchema)

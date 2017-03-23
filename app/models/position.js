@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
 var PositionSchema = new mongoose.Schema({
   text: String,
   type: Number,
-  updated: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
   _creator : { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 
 })

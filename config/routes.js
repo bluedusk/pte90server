@@ -4,6 +4,7 @@ var Router = require('koa-router')
 var UserController = require('../app/controllers/userController')
 var ItemController = require('../app/controllers/itemController')
 var PositionController = require('../app/controllers/positionController')
+var ExpController = require('../app/controllers/expController')
 
 
 module.exports = function() {
@@ -53,9 +54,11 @@ module.exports = function() {
  router.delete('/positions/:id', PositionController.destroy)
  router.get('/positions/:id', PositionController.show)
 
- // experience
- router.get('/experiences', ItemController.list)
- router.post('/experiences', ItemController.new)
+ // position
+ router.get('/experiences', ExpController.list)
+ router.post('/experiences', ExpController.new)
+ router.delete('/experiences/:id', ExpController.destroy)
+ router.get('/experiences/:id', ExpController.show)
 
 
   return router

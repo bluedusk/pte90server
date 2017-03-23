@@ -13,7 +13,8 @@ var ItemSchema = new mongoose.Schema({
   imageType: String,
   itemId: String,
   contributor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  official: Boolean
+  official: Boolean,
+  updatedAt: { type: Date, default: Date.now },
 
 })
 
