@@ -57,3 +57,14 @@ exports.show = function *(next){
     this.body = users
     return next
 }
+exports.update = function *(next){
+    let res = this.request.body;
+
+    let user = yield User.update({_id:res.id,},{points:res.points})
+    this.body = {
+      resCode: '0000',
+      resMsg: 'moidfy user success',
+      resBody:user
+      }
+    return next
+}

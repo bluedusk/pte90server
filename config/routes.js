@@ -31,7 +31,7 @@ module.exports = function() {
   router.post('/users', UserController.new)
   router.get('/users', UserController.list)
   router.get('/users/:id', UserController.show)
-  // router.patch('/user/:id', UserController.update)
+  router.patch('/users', UserController.update)
 
 
 
