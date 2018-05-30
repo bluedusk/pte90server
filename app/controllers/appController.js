@@ -6,34 +6,27 @@ mongoose.Promise = require('bluebird')
 var User = mongoose.model('User')
 var uuid = require('uuid')
 
-// signup
+
+
+
+// validate token for api calls
 exports.validToken = function *(next){
-  var user = new User({
-    name: 'helloworld',
-    accessToken: uuid.v4()
-  });
 
   try {
-    console.log(user.toString());
-    user = yield user.save();
-    this.body = user
-  } catch (e) {
+    
+    var decoded = yield User.findByToken(this.request.header['x-auth']);
+
+  } catch (error) {
+    
+    this.status = 401;
     this.body = {
-    success: false
+      success: false,
+      err: error,
+      errMsg: this.response
     }
+
+    return next;
   }
-  return next
+   yield next;
 }
 
-// get users list
-exports.list = function *(next){
-    let users = yield User.find()
-    this.body = users
-    return next
-}
-
-exports.show = function *(next){
-    let users = yield User.find({_id:"58b523c3ef8312ab91fef301"})
-    this.body = users
-    return next
-}

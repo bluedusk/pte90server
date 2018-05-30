@@ -1,3 +1,5 @@
+require('./config/config');
+
 const Koa = require('koa');
 const app = new Koa();
 const convert = require('koa-convert');
@@ -13,7 +15,7 @@ var Experience = require('./app/models/experience');
 mongoose.Promise = require('bluebird')
 mongoose.set('debug', true);
 
-// TODO createConnection ?
+// TODO createConnection with auth
 var db = mongoose.connect('mongodb://127.0.0.1:27017/db');
 
 db.connection.on("error", function (error) {

@@ -7,7 +7,6 @@ var PositionSchema = new mongoose.Schema({
   type: Number,
   updatedAt: { type: Date, default: Date.now },
   _creator : { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-
 })
 
 

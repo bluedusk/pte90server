@@ -1,13 +1,14 @@
 'use strict'
 
 var Router = require('koa-router')
+var AppController = require('../app/controllers/appController')
 var UserController = require('../app/controllers/userController')
 var ItemController = require('../app/controllers/itemController')
 var PositionController = require('../app/controllers/positionController')
 var ExpController = require('../app/controllers/expController')
 
 
-module.exports = function() {
+module.exports = function () {
   var router = new Router({
     prefix: '/api'
   })
@@ -27,38 +28,43 @@ module.exports = function() {
  *
  */
 
+
+  // app
+
+
   // user
-  router.post('/users', UserController.new)
-  router.get('/users', UserController.list)
-  router.get('/users/:id', UserController.show)
-  router.patch('/users', UserController.update)
+  router.post('/users', UserController.new);
+  router.post('/login', UserController.login);
+  // router.get('/users', AppController.validToken,UserController.list)
+  router.get('/users', UserController.list);
+  router.get('/users/:id', UserController.show);
+  router.patch('/users', UserController.update);
 
 
 
- // items
- router.get('/items', ItemController.list)
- router.get('/items/:type', ItemController.list)
- router.post('/items', ItemController.new)
- router.delete('/items/:id', ItemController.destroy)
- // router.patch('/items/:id', ItemController.update)
+  // items
+  router.get('/items', ItemController.list)
+  router.get('/items/:type', ItemController.list)
+  router.post('/items', ItemController.new)
+  router.delete('/items/:id', ItemController.destroy)
+  // router.patch('/items/:id', ItemController.update)
 
- // useritems: user&items reference table
+  // useritems: user&items reference table
+  router.post('/tested', ItemController.testedNew)
+  router.patch('/tested', ItemController.testedDestroy)
+  // router.patch('/items/:id', ItemController.update)
 
- router.post('/tested', ItemController.testedNew)
- router.patch('/tested', ItemController.testedDestroy)
- // router.patch('/items/:id', ItemController.update)
+  // position
+  router.get('/positions', PositionController.list)
+  router.post('/positions', PositionController.new)
+  router.delete('/positions/:id', PositionController.destroy)
+  router.get('/positions/:id', PositionController.show)
 
- // position
- router.get('/positions', PositionController.list)
- router.post('/positions', PositionController.new)
- router.delete('/positions/:id', PositionController.destroy)
- router.get('/positions/:id', PositionController.show)
-
- // position
- router.get('/experiences', ExpController.list)
- router.post('/experiences', ExpController.new)
- router.delete('/experiences/:id', ExpController.destroy)
- router.get('/experiences/:id', ExpController.show)
+  // experiences
+  router.get('/experiences', ExpController.list)
+  router.post('/experiences', ExpController.new)
+  router.delete('/experiences/:id', ExpController.destroy)
+  router.get('/experiences/:id', ExpController.show)
 
 
   return router

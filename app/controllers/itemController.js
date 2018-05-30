@@ -26,6 +26,8 @@ exports.new = function *(next){
   //   ImageType: 'pie',
   //   ItemId: uuid.v4()
   // });
+
+  console.log("contributor", res.contributor);
   let item = new TestItem();
   item.itemText = res.itemText;
   item.itemType = res.itemType;
